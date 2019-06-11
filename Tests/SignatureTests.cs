@@ -45,8 +45,8 @@ namespace Tests
             _parameters.Add("api_signature", "12345");
             _parameters.Add("something", "else");
             var stringToSign = BuildSignature().ToPlainTextString();
-            Assert.That(stringToSign, Is.StringContaining("something"));
-            Assert.That(stringToSign, Is.Not.StringContaining("api_signature"));
+            Assert.That(stringToSign, Does.Contain("something"));
+            Assert.That(stringToSign, Does.Not.Contain("api_signature"));
         }
 
 

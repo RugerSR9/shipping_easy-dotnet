@@ -13,7 +13,7 @@ ECHO BUILDING %CONFIG%
 
 IF DEFINED FRAMEWORKDIR GOTO NUGETRESTORE
 echo Setting Visual Studio environment variables
-call "%VS120COMNTOOLS%\vsvars32.bat"
+call "%VS140COMNTOOLS%\vsvars32.bat"
 
 :NUGETRESTORE
 .nuget\nuget.exe restore

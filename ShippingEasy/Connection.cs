@@ -31,11 +31,7 @@ namespace ShippingEasy
 
         static Connection()
         {
-            UserAgentString = String.Format("ShippingEasy .NET Client: {0}/{1} ({2} {3})",
-                AssemblyInfo.GetAssemblyName(),
-                AssemblyInfo.GetAssemblyVersion(),
-                AssemblyInfo.GetFileVersion(),
-                AssemblyInfo.GetCommitIdentifier());
+            UserAgentString = String.Format("ShippingEasy .NET Client: .NET Standard/1.0.0 (1.0.0 NA)");
         }
         /// <summary>
         /// Creates a new instance of a Connection

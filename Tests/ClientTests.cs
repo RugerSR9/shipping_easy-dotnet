@@ -57,7 +57,7 @@ namespace Tests
 
             var response = client.GetOrders();
             Assert.IsFalse(response.Success);
-            Assert.That(response.Errors, Is.StringContaining("Access denied"));
+            Assert.That(response.Errors, Does.Contain("Access denied"));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Tests
 
             var response = client.GetOrders();
             Assert.IsFalse(response.Success);
-            Assert.That(response.HttpResponse.Body, Is.StringContaining("Internal Server Error"));
+            Assert.That(response.HttpResponse.Body, Does.Contain("Internal Server Error"));
         }
 
         [Test]
@@ -87,10 +87,10 @@ namespace Tests
 
             var response = client.CreateOrder("abc", new Order());
             Assert.IsFalse(response.Success);
-            Assert.That(response.Errors, Is.StringContaining("ordered_at"));
-            Assert.That(response.Errors, Is.StringContaining("recipients"));
+            Assert.That(response.Errors, Does.Contain("ordered_at"));
+            Assert.That(response.Errors, Does.Contain("recipients"));
         }
-        
+
         [Test]
         public void CreateOrderExpiredRequestSignature()
         {
@@ -98,7 +98,7 @@ namespace Tests
 
             var response = client.CreateOrder("abc", new Order());
             Assert.IsFalse(response.Success);
-            Assert.That(response.Errors, Is.StringContaining("The request has expired"));
+            Assert.That(response.Errors, Does.Contain("The request has expired"));
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Tests
 
             var response = client.CancelOrder("abc", "ABC-100");
             Assert.IsTrue(response.Success);
-            Assert.AreEqual("cleared", response.Order.OrderStatus);            
+            Assert.AreEqual("cleared", response.Order.OrderStatus);
         }
 
         [Test]
@@ -118,8 +118,8 @@ namespace Tests
 
             var response = client.CancelOrder("abc", "ABC-100");
             Assert.IsFalse(response.Success);
-            Assert.That(response.Errors, Is.StringContaining("cannot be cancelled"));
-        }   
+            Assert.That(response.Errors, Does.Contain("cannot be cancelled"));
+        }
 
         [Test]
         public void CancelOrderUnknownOrder()
@@ -128,7 +128,7 @@ namespace Tests
 
             var response = client.CancelOrder("abc", "ABC-45");
             Assert.IsFalse(response.Success);
-            Assert.That(response.Errors, Is.StringContaining("Order not found"));
+            Assert.That(response.Errors, Does.Contain("Order not found"));
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace Tests
 
             var response = client.CancelOrder("abc", "ABC-45");
             Assert.IsFalse(response.Success);
-            Assert.That(response.Errors, Is.StringContaining("Access denied"));
+            Assert.That(response.Errors, Does.Contain("Access denied"));
         }
 
         [Test]
@@ -181,13 +181,13 @@ namespace Tests
     }
   ]
 }";
-            Assert.AreEqual(serializedOrder, json);
+            Assert.AreEqual(serializedOrder, json.Replace("\r\n", "\n"));
         }
 
         private static Connection ResponseFromFile(string filename)
         {
             var contents = Fixture.Json(filename);
-            return FakeConnection(returns => new HttpResponse{Body = contents});
+            return FakeConnection(returns => new HttpResponse { Body = contents });
         }
 
         private static Connection FakeConnection(Func<WebRequest, HttpResponse> response)
@@ -195,7 +195,7 @@ namespace Tests
             var fakeConnection = new Connection("fakeKey", "fakeSecret", "http://localhost")
             {
                 RequestRunner = response,
-                SetRequestBody = (request, body) => {}
+                SetRequestBody = (request, body) => { }
             };
             return fakeConnection;
         }

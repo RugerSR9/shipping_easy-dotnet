@@ -112,7 +112,7 @@ namespace Tests
             Assert.AreEqual(3, line2.ProductOptions.Count);
             Assert.AreEqual("blue", line2.ProductOptions["color"]);
             Assert.AreEqual("2", line2.ProductOptions["size"]);
-            Assert.AreEqual("True", line2.ProductOptions["wide"]);
+            Assert.AreEqual("true", line2.ProductOptions["wide"]);
         }
     }
 }
